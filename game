@@ -1,0 +1,97 @@
+import pygame
+
+pygame.init()
+clock = pygame.time.Clock()
+fps = 60
+
+bright_red = (255, 0, 0)
+red = (150, 0, 0)
+bg_color = (90, 150, 255)
+bright_green = (0, 255, 0)
+green = (0, 150, 0)
+
+score = 0
+
+
+# Создаем дисплей
+screen = pygame.display.set_mode((1280, 720))
+screen.fill(bg_color)
+
+# Именяем заголовок окна
+pygame.display.set_caption('Clicker')
+
+#def Display_text():
+    #f = pygame.font.SysFont('arial', 30)
+   # text = f.render(str(score), True, (255, 255, 255))
+   # surface.blit()
+
+
+
+
+
+
+def button_menu(surface, x, y, widht, height, color_active, color_passive): #создает кнопку
+    button = pygame.Surface((widht, height))
+    button_rect = button.get_rect(center=(x, y))
+
+    mouse = pygame.mouse.get_pos()
+    if button_rect.top < mouse[1] < button_rect.bottom and button_rect.left < mouse[0] < button_rect.right:
+        button.fill(color_active)
+    else:
+        button.fill(color_passive)
+
+    surface.blit(button, button_rect)
+
+
+def menu():
+    intro = True
+    while intro:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                exit()
+
+
+        menu_screen = pygame.Surface((1280, 720))                       #create a new surf over a main screen
+        menu_screen.fill((210, 150, 75))                                #fill new surf with some color
+        screen.blit(menu_screen, (0, 0))                                #draw new surf on main screen
+        f = pygame.font.SysFont('arial', 90)                            # text settings
+        some_text = f.render('another clicker', True, (50, 55, 55))
+        some_text_rect = some_text.get_rect(center=(1280//2, 720//2))   #text positioning
+
+        menu_screen.blit(some_text, some_text_rect)                     # draw text over the new surf
+        pygame.display.update()
+
+        button_menu(menu_screen, 500, 600, 100, 60, bright_red, red)    # button func was before and it func works earlier
+        pygame.display.update()
+        clock.tick(fps)
+        pygame.display.update()
+
+
+# Основной цикл. disabled now
+def main_loop():
+    run = False
+    while run == True:
+
+
+        button_menu(800, 600, 120, 60, bright_green, green )
+        button_menu(400, 600, 120, 60, bright_red, red)
+
+
+
+        f = pygame.font.SysFont('arial', 30)
+        text_score = f.render(str(score), True, (255, 255, 255))
+
+
+        screen.blit(text_score, (50, 50))
+        pygame.display.update()
+        screen.fill(bg_color)
+
+        clock.tick(fps)
+
+
+menu()
+
+
+pygame.display.update()
+screen.fill(bg_color)
+clock.tick(fps)
